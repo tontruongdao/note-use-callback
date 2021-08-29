@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import logo from './logo.svg';
 import './App.css';
 
@@ -6,7 +6,7 @@ const List = ({ getItems }) => {
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    setItems(getItems())
+    setItems(getItems(5))
     console.log("updating items")
   }, [getItems])
 
@@ -17,9 +17,9 @@ const App = () => {
   const [number, setNumber] = useState(1)
   const [dark, setDark] = useState(false)
   
-  const getItems = () => {
-    return [number, number + 1, number + 2]
-  }
+  const getItems = useCallback((incrementor) => {
+    return [number, number + 1, number + incrementor]
+  }, [number])
 
   const theme = {
     display: "flex",
